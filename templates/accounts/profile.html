@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card card-body text-center shadow-sm">
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="Avatar de {{ user.username }}" class="avatar mx-auto mb-3">
+            {% else %}
+                <div class="avatar avatar--empty mx-auto mb-3">{{ user.username|first|upper }}</div>
+            {% endif %}
+            <h1 class="h4 mb-0">{{ user.get_full_name|default:user.username }}</h1>
+            <p class="text-muted small">@{{ user.username }}{% if user.email %} · {{ user.email }}{% endif %}</p>
+            <p>{{ profile.bio|default:"Todavía no escribiste tu biografía." }}</p>
+            <a href="{% url 'accounts:profile_edit' %}" class="btn btn-outline-primary btn-sm">Editar perfil</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h2 class="h5 mb-3">Mis publicaciones ({{ user_posts|length }})</h2>
+        {% if user_posts %}
+            <ul class="list-group shadow-sm">
+                {% for post in user_posts %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                        <span class="text-muted small">{{ post.created_at|date:"d/m/Y" }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">Todavía no publicaste nada. <a href="{% url 'posts:create' %}">Crear un post</a></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
