@@ -1,4 +1,4 @@
-# 📝 Blog Web con Django
+
 
 Blog web desarrollado con **Python y Django** como entrega final del curso. Permite que los usuarios se registren, inicien sesión y publiquen posts con imágenes, que cualquier visitante puede leer y buscar.
 
